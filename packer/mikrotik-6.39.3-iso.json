@@ -1,0 +1,40 @@
+{
+    "builders": [
+        {
+            "type": "virtualbox-iso",
+            "vm_name": "RouterOS-6.39.3",
+            "guest_os_type": "Other",
+            "disk_size": "256",
+            "vboxmanage": [
+                ["modifyvm", "{{.Name}}", "--memory", "128"],
+                ["modifyvm", "{{.Name}}", "--acpi", "on"],
+                ["modifyvm", "{{.Name}}", "--ioapic", "on"],
+                ["modifyvm", "{{.Name}}", "--hpet", "on"],
+                ["modifyvm", "{{.Name}}", "--rtcuseutc", "on"],
+                ["modifyvm", "{{.Name}}", "--pae", "on"],
+                ["modifyvm", "{{.Name}}", "--usb", "on"],
+                ["modifyvm", "{{.Name}}", "--usbehci", "off"]
+            ],
+            "iso_url": "https://download2.mikrotik.com/routeros/6.39.3/mikrotik-6.39.3.iso",
+            "iso_checksum": "8f64ac5887c47dca592b318fff419ab9",
+            "iso_checksum_type": "md5",
+            "boot_command": [
+		"<down><spacebar><down><spacebar><down><spacebar><right><up><up><up><spacebar><down><spacebar><down><down><down><spacebar><down><down><spacebar>",
+		"<up><up><right><up><up><up><spacebar><up><spacebar>iny",
+		"<wait5><enter><wait10><wait5>",
+                "admin<enter><wait>",
+                "<enter><wait>",
+		"y<enter>q<wait>",
+                "<enter><wait>",
+                "/ip dhcp-client add disabled=no interface=ether1<enter><wait>",
+                "/user add name=vagrant password=vagrant group=full<enter>"
+            ],
+            "guest_additions_mode": "disable",
+            "ssh_username": "admin",
+            "ssh_password": "",
+            "ssh_wait_timeout": "80s",
+            "shutdown_command": "execute \"/system shutdown\"",
+            "format": "ova"
+        }
+    ]
+}
